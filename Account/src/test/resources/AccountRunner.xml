@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Account" thread-count="4">
+    <parameter name="platform" value="mac"/>
+    <parameter name="url" value="https://www.wellsfargo.com/"/>
+    <parameter name="browserName" value="chrome"/>
+    <parameter name="useCloudEnv" value="false"/>
+    <parameter name="browserVersion" value="75.0"/>
+    <parameter name="cloudEnvName" value="browserstack"/>
+
+    <test name="package1.HomePage test"  >
+        <classes>
+            <class name="package2.TestHomePage"/>
+        </classes>
+    </test>
+</suite>
