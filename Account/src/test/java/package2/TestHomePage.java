@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import package1.HomePage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class TestHomePage extends CommonAPI {
     HomePage homePage;
@@ -16,8 +17,8 @@ public class TestHomePage extends CommonAPI {
        homePage= PageFactory.initElements(driver, HomePage.class);
     }
 
-    @Test(enabled = false)
-    public void testSignOn(){
+    @Test
+    public void testSignOn() throws SQLException, IOException, ClassNotFoundException {
         homePage.signON();
     }
     @Test(enabled = false)

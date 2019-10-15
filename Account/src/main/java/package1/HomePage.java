@@ -1,12 +1,15 @@
 package package1;
 
 import base.CommonAPI;
+import databases.ConnectToSqlDB;
+import databases.User;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,14 +40,42 @@ public class HomePage extends CommonAPI {
     List<WebElement> aTag;
 
 
-    public void signON(){
+
+   public static void insertvalue() throws SQLException, IOException, ClassNotFoundException {
+       ConnectToSqlDB.connectToSqlDatabase();
+       ConnectToSqlDB.ps= ConnectToSqlDB.connect.prepareStatement("INSERT INTO Students (stName,stID) VALUES (?, ?)");
+       ConnectToSqlDB.ps.setString(1,"Rosh");
+       ConnectToSqlDB.ps.setInt(2,1234);
+       ConnectToSqlDB.ps.executeUpdate();
+       ConnectToSqlDB.ps.close();
+
+   }
+
+
+    public void signON() throws SQLException, IOException, ClassNotFoundException {
+        //insertvalue();
+        Select Destination = new Select(destination);
+        Destination.selectByValue("Transfer");
+        List<User> list = new ArrayList<User>();
+        list= ConnectToSqlDB.readUserProfileFromSqlTable();
+        for(User u:list){
+            String username= u.getStName();
+            String psw= u.getStID();
+            userid.sendKeys(username);
+            password.sendKeys(psw);
+            btnSignon.click();
+            driver.navigate().back();
+        }
+        sleepFor(3);
+    }
+  /**  public void signON(){
         Select Destination = new Select(destination);
         Destination.selectByValue("Transfer");
         userid.sendKeys("SoniMazri");
         password.sendKeys("123");
         btnSignon.click();
         sleepFor(3);
-    }
+    }**/
     public void BankingMenu(){
         ArrayList<WebElement> banking = new ArrayList<WebElement>();
         banking.add(CheckingAccounts); banking.add(SavingAccountCd) ; banking.add(debitprepaidCard);banking.add(CreditCards);
